@@ -23,9 +23,11 @@ Twilio credentials belong only in a local `.env` file.
 
 Use HTTPS for internet-facing Twilio webhooks.
 
-The public Voice routes validate Twilio's `X-Twilio-Signature` when `PUBLIC_BASE_URL` and `TWILIO_AUTH_TOKEN` are configured.
+The Voice routes require `PUBLIC_BASE_URL` and `TWILIO_AUTH_TOKEN` and validate Twilio's `X-Twilio-Signature`. There is no unsigned local bypass.
 
 `PUBLIC_BASE_URL` must match the public URL Twilio uses to call the application. If a tunnel or reverse proxy changes that URL, update the environment value.
+
+For local webhook verification, use `npm run test:security`, which generates signed test requests with a non-production test token.
 
 ## Voice and speech data
 

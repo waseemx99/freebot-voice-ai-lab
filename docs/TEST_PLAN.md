@@ -9,14 +9,14 @@
 5. Open `http://127.0.0.1:3000`.
 6. In another terminal, run `npm test`.
 
-Before a real public Twilio URL and Auth Token are configured, the smoke test checks:
+The smoke test checks:
 
-- `/health`
-- `/api/status`
-- incoming-call TwiML from `/voice/incoming`
-- speech-response TwiML from `/voice/respond`
+- `/health`;
+- `/api/status`;
+- the project homepage;
+- the website CSS and JavaScript assets.
 
-Once public signature validation is configured, the smoke test still checks the local health/status endpoints but skips unsigned Voice webhook requests. The separate `npm run test:security` test generates Twilio-style signatures and verifies that valid signed requests are accepted while an invalid signature is rejected with HTTP 403.
+Voice webhook routes do not have an unsigned development bypass. Run `npm run test:security` to generate Twilio-style signatures and verify that valid signed requests are accepted while an invalid signature is rejected with HTTP 403.
 
 ## Ollama test
 
