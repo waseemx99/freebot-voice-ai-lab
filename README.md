@@ -130,15 +130,21 @@ http://127.0.0.1:11434
 
 Change `OLLAMA_MODEL` in `.env` if you want to use another installed model.
 
-## Tests
+## Development checks
 
-With the app already running:
+Check the JavaScript files for syntax errors:
+
+```bash
+npm run check
+```
+
+With the app already running, run the application smoke tests:
 
 ```bash
 npm test
 ```
 
-The smoke test checks the app and website endpoints. Run `npm run test:security` for signed Twilio webhook and TwiML verification.
+Run `npm run test:security` for signed Twilio webhook and TwiML verification.
 
 ## Project status
 
