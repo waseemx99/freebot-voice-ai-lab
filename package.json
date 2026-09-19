@@ -27,5 +27,8 @@
   "homepage": "https://github.com/waseemx99/freebot-voice-ai-lab",
   "bugs": {
     "url": "https://github.com/waseemx99/freebot-voice-ai-lab/issues"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
   }
 }
