@@ -34,4 +34,4 @@ Then test the speech-response path before enabling the public Twilio configurati
 6. Confirm that speech is recognized and the response is spoken back correctly.
 7. Confirm that an unsigned request to the public Voice webhook is rejected.
 
-Twilio trial accounts currently restrict Voice testing to verified numbers and to the account's sign-up country, so follow the current Console restrictions when testing.
+If your Twilio account is an eligible trial account, follow the current trial restrictions shown in the Twilio Console, including verified-recipient and geographic limits. Trial availability itself is country-dependent. For paid or previously established accounts, follow the restrictions and permissions shown for that account.
