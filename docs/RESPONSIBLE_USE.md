@@ -2,10 +2,22 @@
 
 This is a phone and AI experiment, so live testing should stay simple and predictable.
 
-- Test only with numbers you control or people who have agreed to participate.
-- Do not use the project for unsolicited or deceptive calls.
-- Do not turn it into a bulk dialer or contact-harvesting system.
-- Do not ask callers for passwords, one-time passcodes, payment-card details, or other authentication secrets.
-- Follow the telecom, privacy, and platform rules that apply where the project is used.
+## Intended testing
 
-These notes describe how this prototype is intended to be used; they are not a substitute for reviewing the requirements of a real production deployment.
+- Use the current prototype for inbound Voice testing.
+- Test with numbers you control or people who have agreed to participate.
+- Make it clear that the caller is interacting with a voice assistant demo.
+- Stop testing with a person if they no longer want to participate.
+
+## Not part of the current project
+
+- unsolicited or deceptive calls;
+- telemarketing or advertising;
+- bulk or predictive dialing;
+- contact harvesting;
+- SMS, WhatsApp, or OTP delivery;
+- collection of passwords, one-time passcodes, payment-card details, or other authentication secrets.
+
+The current code does not include an outbound dialer, call-recording feature, or contact database.
+
+Follow the telecom, privacy, platform, and country-specific rules that apply wherever the project is used. These notes describe the intended scope of this prototype; they are not a substitute for reviewing the requirements of a real production deployment.
