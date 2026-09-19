@@ -128,10 +128,10 @@ This is an early prototype. The next steps are better conversation state, config
 
 ## Notes
 
-- `docs/USE_CASE.md` — project behavior and boundaries
-- `docs/SECURITY.md` — credential and data-handling notes
-- `docs/TEST_PLAN.md` — local and live-call testing
-- `docs/RESPONSIBLE_USE.md` — basic usage expectations
+- `docs/USE_CASE.md` - project behavior and boundaries
+- `SECURITY.md` - credential and data-handling notes
+- `docs/TEST_PLAN.md` - local and live-call testing
+- `docs/RESPONSIBLE_USE.md` - basic usage expectations
 
 ## Upstream project
 
