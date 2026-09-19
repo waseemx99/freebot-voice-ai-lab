@@ -140,6 +140,12 @@ npm test
 
 The smoke test checks the app and website endpoints. Run `npm run test:security` for signed Twilio webhook and TwiML verification.
 
+## Demo evidence
+
+The `demo/` folder contains the screenshot guide, capture checklist, Windows verification helper, sanitized-log guidance, and live-call test template.
+
+Start with `demo/README.md`. Only real screenshots and real test output should be added.
+
 ## Project status
 
 This is an early prototype. The next steps are better conversation state, configurable prompts, cleaner call logs, and tighter integration with the upstream Freebot project.
