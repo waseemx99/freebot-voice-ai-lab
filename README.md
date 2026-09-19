@@ -4,6 +4,22 @@ A small **Twilio Programmable Voice + local Ollama** prototype for experimenting
 
 I built this while exploring how a voice channel could connect to a Freebot-style assistant. It is currently a standalone prototype rather than a full integration with the upstream Freebot application.
 
+Maintainer: **Waseem Hassan** ([@waseemx99](https://github.com/waseemx99))
+
+## Current scope
+
+The current prototype is deliberately narrow:
+
+- **Twilio Programmable Voice only**;
+- inbound calls only - there is no outbound dialer;
+- Twilio `<Gather>` collects speech and provides the recognized transcript to the application;
+- Ollama is used only for local response generation;
+- no SMS, WhatsApp, Twilio Verify, or OTP workflow;
+- no call recording or transcript database;
+- live testing should use numbers you control or people who have agreed to participate.
+
+This makes the data path and intended behavior easy to inspect.
+
 ## What it does
 
 - accepts an inbound Twilio Voice webhook;
@@ -129,6 +145,7 @@ This is an early prototype. The next steps are better conversation state, config
 ## Notes
 
 - `docs/USE_CASE.md` - project behavior and boundaries
+- `docs/DATA_FLOW.md` - what data moves through Twilio, the app, and Ollama
 - `SECURITY.md` - credential and data-handling notes
 - `docs/TEST_PLAN.md` - local and live-call testing
 - `docs/RESPONSIBLE_USE.md` - basic usage expectations
@@ -137,4 +154,8 @@ This is an early prototype. The next steps are better conversation state, config
 
 FreebotAI/Freebot: https://github.com/FreebotAI/Freebot
 
-This repository is an independent experiment and is not an official Twilio or FreebotAI project.
+This repository is an independent experiment and is not an official Twilio or FreebotAI project. It does not currently include source code copied from the upstream Freebot repository; the name describes the integration direction being explored. The upstream Freebot project is published under the MIT License.
+
+## License
+
+The code in this repository is available under the MIT License. See `LICENSE`.
