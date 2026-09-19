@@ -10,8 +10,20 @@ const app = express();
 const port = Number(process.env.PORT || 3000);
 
 app.disable('x-powered-by');
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json({ limit: '64kb' }));
+
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'"
+  );
+  next();
+});
+
+app.use(express.urlencoded({ extended: false, limit: '16kb', parameterLimit: 100 }));
+app.use(express.json({ limit: '16kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 function configured(name) {
@@ -138,7 +150,7 @@ app.all('/voice/incoming', validateTwilioWebhook, (_req, res) => {
 
   gather.say(
     { voice: 'alice', language: 'en-US' },
-    'Hi. This is the Freebot voice assistant demo. How can I help you?'
+    'Hi. You have reached the Freebot Voice AI Lab, a development voice assistant demo. How can I help you?'
   );
 
   vr.say({ voice: 'alice', language: 'en-US' }, 'I did not hear a response. Goodbye.');
