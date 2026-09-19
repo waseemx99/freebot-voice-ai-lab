@@ -5,9 +5,9 @@ The repository CI checks the current prototype on every pull request to `main`.
 ## Checks
 
 - JavaScript syntax for the server and test scripts.
-- Application startup on Node.js 20.
+- Application startup on Node.js 24.
 - Health and status endpoints.
-- TwiML generation for the local voice flow.
+- Application and website smoke tests, plus TwiML generation through signed webhook tests.
 - Twilio-style request-signature validation.
 - Acceptance of a valid signed webhook request.
 - Rejection of an invalid webhook signature with HTTP 403.

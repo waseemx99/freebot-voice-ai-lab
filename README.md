@@ -1,5 +1,7 @@
 # Freebot Voice AI Lab
 
+Repository: https://github.com/waseemx99/freebot-voice-ai-lab
+
 A small **Twilio Programmable Voice + local Ollama** prototype for experimenting with AI-assisted phone interactions.
 
 I built this while exploring how a voice channel could connect to a Freebot-style assistant. It is currently a standalone prototype rather than a full integration with the upstream Freebot application.
@@ -48,7 +50,7 @@ TwiML voice response
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 20+
 - a Twilio account with Voice access for live call testing
 - an HTTPS-accessible webhook URL
 - Ollama if you want local AI responses
