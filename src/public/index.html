@@ -134,6 +134,7 @@
             The project keeps the moving parts easy to understand: one inbound voice webhook, one speech-response route,
             and one optional local model connection.
           </p>
+          <div class="scope-note"><strong>Current scope:</strong> Programmable Voice only. Inbound calls, Twilio speech recognition, and local Ollama response generation. No SMS, Verify, WhatsApp, outbound dialer, call recording, or contact database.</div>
         </div>
 
         <div class="feature-grid">
@@ -326,6 +327,10 @@
             <div><strong>Signature checked</strong><p>Public voice requests are validated with Twilio's request signature.</p></div>
           </div>
           <div class="security-item">
+            <span>Speech</span>
+            <div><strong>Twilio handles recognition</strong><p>Caller speech is collected through Twilio Gather. The resulting transcript is what the application sends to local Ollama.</p></div>
+          </div>
+          <div class="security-item">
             <span>Storage</span>
             <div><strong>No database yet</strong><p>The current prototype does not intentionally persist call audio or transcripts.</p></div>
           </div>
@@ -382,6 +387,14 @@
             <p>No. Ollama is optional. Without it, the voice route returns a simple fallback response so the telephony flow can still be tested.</p>
           </details>
           <details>
+            <summary>Does it use SMS, WhatsApp, or OTP verification?</summary>
+            <p>No. The current project scope is Twilio Programmable Voice only.</p>
+          </details>
+          <details>
+            <summary>Does "local AI" mean the entire call stays local?</summary>
+            <p>No. Twilio handles telephony and speech recognition. Only the language-model response generation is local through Ollama.</p>
+          </details>
+          <details>
             <summary>Does it record calls?</summary>
             <p>No call-recording feature is included in the current prototype.</p>
           </details>
@@ -432,7 +445,7 @@
       </div>
     </div>
     <div class="shell footer-bottom">
-      <span>Independent development project.</span>
+      <span>Independent development project maintained by Waseem Hassan (@waseemx99).</span>
       <a href="#top">Back to top</a>
     </div>
   </footer>
