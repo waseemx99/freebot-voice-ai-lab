@@ -16,3 +16,12 @@ Recommended filenames:
 See `../SCREENSHOT_GUIDE.md` before capturing them.
 
 Do not commit screenshots containing real secrets, payment details, verification codes, or unnecessary personal information.
+
+
+## Current evidence status
+
+Screenshots `01` through `05` have been generated from the real application and tests in GitHub Actions and are now stored in this folder.
+
+Screenshots `06` through `08` remain pending because they require the maintainer's real Ollama installation and/or live Twilio account access.
+
+See `../AUTOMATED_EVIDENCE.md` for provenance and limitations.
