@@ -20,8 +20,12 @@ function configured(name) {
 }
 
 function isLocalRequest(req) {
-  const host = String(req.hostname || '').toLowerCase();
-  return host === 'localhost' || host === '127.0.0.1' || host === '::1';
+  const address = String(req.socket?.remoteAddress || '').toLowerCase();
+  return (
+    address === '127.0.0.1' ||
+    address === '::1' ||
+    address === '::ffff:127.0.0.1'
+  );
 }
 
 function validateTwilioWebhook(req, res, next) {
