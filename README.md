@@ -33,7 +33,7 @@ TwiML voice response
 ## Requirements
 
 - Node.js 18+
-- a Twilio account and Voice-capable number for live call testing
+- a Twilio account with Voice access for live call testing
 - an HTTPS-accessible webhook URL
 - Ollama if you want local AI responses
 
@@ -79,9 +79,7 @@ The main settings are:
 PORT=3000
 PUBLIC_BASE_URL=https://your-public-url.example
 
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=replace_me
-TWILIO_PHONE_NUMBER=+1XXXXXXXXXX
 
 OLLAMA_BASE_URL=http://127.0.0.1:11434
 OLLAMA_MODEL=qwen3.5:9b-64k
