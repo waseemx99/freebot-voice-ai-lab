@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freebot Voice AI Lab</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0b1220;color:#eef3ff;margin:0}main{max-width:980px;margin:auto;padding:48px 22px}h1{font-size:42px;margin-bottom:8px}.tag{display:inline-block;background:#14213d;border:1px solid #2b3b63;padding:7px 10px;border-radius:999px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:28px}.card{background:#111a2e;border:1px solid #243250;border-radius:16px;padding:18px}.muted{color:#a8b3cc;line-height:1.6}code{background:#08101f;padding:3px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<main>
+<span class="tag">Development / Compliance Demo</span>
+<h1>Freebot Voice AI Lab</h1>
+<p class="muted">Consent-based Twilio Programmable Voice integration for authorized development testing with an optional local Ollama assistant.</p>
+<div class="grid">
+<div class="card"><h3>Scope</h3><p class="muted">Inbound test calls only. No bulk dialing, telemarketing, or unsolicited calls.</p></div>
+<div class="card"><h3>Voice</h3><p class="muted">Twilio Programmable Voice + TwiML speech gathering.</p></div>
+<div class="card"><h3>AI</h3><p class="muted">Optional local Ollama model with safe fallback behavior.</p></div>
+<div class="card"><h3>Status</h3><pre id="status">Loading…</pre></div>
+</div>
+</main>
+<script>
+fetch('/api/status').then(r=>r.json()).then(s=>{
+ document.getElementById('status').textContent=JSON.stringify(s,null,2)
+}).catch(()=>document.getElementById('status').textContent='Status unavailable');
+</script>
+</body>
+</html>
