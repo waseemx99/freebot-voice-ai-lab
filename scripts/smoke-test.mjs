@@ -16,36 +16,18 @@ await check('/health');
 
 const statusText = await check('/api/status');
 const status = JSON.parse(statusText);
-const signatureValidationActive =
-  Boolean(status?.configuration?.webhookSecurityReady);
 
-if (signatureValidationActive) {
-  console.log(
-    'SKIP unsigned voice webhook checks: public Twilio signature validation is configured.'
-  );
-  console.log(
-    'Use a real Twilio test call for the signed webhook path, or temporarily test with placeholder public credentials.'
-  );
-  process.exit(0);
+if (!status?.app || !status?.voice || !status?.configuration) {
+  throw new Error('Status response is missing expected fields');
 }
 
-const incoming = await check('/voice/incoming', { method: 'POST' });
-if (!incoming.includes('<Response>') || !incoming.includes('<Gather')) {
-  throw new Error('Incoming TwiML missing expected elements');
+const home = await check('/');
+if (!home.includes('Freebot Voice AI Lab')) {
+  throw new Error('Project website did not render expected content');
 }
 
-const body = new URLSearchParams({
-  SpeechResult: 'What are your opening hours?'
-});
+await check('/styles.css');
+await check('/app.js');
 
-const reply = await check('/voice/respond', {
-  method: 'POST',
-  headers: { 'content-type': 'application/x-www-form-urlencoded' },
-  body
-});
-
-if (!reply.includes('<Response>')) {
-  throw new Error('Response TwiML invalid');
-}
-
-console.log('All local smoke tests passed.');
+console.log('All application smoke tests passed.');
+console.log('Run npm run test:security for signed Twilio webhook verification.');
