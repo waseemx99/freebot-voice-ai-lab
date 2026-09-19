@@ -19,6 +19,45 @@ function configured(name) {
   return Boolean(value && value.trim() && !/replace_me|xxxxxxxx|YOUR-PUBLIC/i.test(value));
 }
 
+function isLocalRequest(req) {
+  const host = String(req.hostname || '').toLowerCase();
+  return host === 'localhost' || host === '127.0.0.1' || host === '::1';
+}
+
+function validateTwilioWebhook(req, res, next) {
+  const tokenReady = configured('TWILIO_AUTH_TOKEN');
+  const publicUrlReady = configured('PUBLIC_BASE_URL');
+
+  // Keep local smoke testing simple before Twilio credentials are configured.
+  if (isLocalRequest(req) && !publicUrlReady) {
+    return next();
+  }
+
+  if (!tokenReady || !publicUrlReady) {
+    return res.status(503).send('Twilio webhook security is not configured.');
+  }
+
+  const signature = req.get('x-twilio-signature');
+  const base = process.env.PUBLIC_BASE_URL.replace(/\/$/, '');
+  const requestUrl = `${base}${req.originalUrl}`;
+  const params = req.method === 'POST' ? req.body : {};
+
+  const valid =
+    Boolean(signature) &&
+    twilio.validateRequest(
+      process.env.TWILIO_AUTH_TOKEN,
+      signature,
+      requestUrl,
+      params
+    );
+
+  if (!valid) {
+    return res.status(403).send('Invalid Twilio signature.');
+  }
+
+  next();
+}
+
 function cleanSpeech(text) {
   return String(text || '')
     .replace(/[<>]/g, '')
@@ -82,7 +121,7 @@ app.get('/api/status', (_req, res) => {
   });
 });
 
-app.all('/voice/incoming', (_req, res) => {
+app.all('/voice/incoming', validateTwilioWebhook, (_req, res) => {
   const vr = new twilio.twiml.VoiceResponse();
   const base = (process.env.PUBLIC_BASE_URL || '').replace(/\/$/, '');
   const action = base ? `${base}/voice/respond` : '/voice/respond';
@@ -106,7 +145,7 @@ app.all('/voice/incoming', (_req, res) => {
   res.type('text/xml').send(vr.toString());
 });
 
-app.post('/voice/respond', async (req, res) => {
+app.post('/voice/respond', validateTwilioWebhook, async (req, res) => {
   const vr = new twilio.twiml.VoiceResponse();
   const speech = cleanSpeech(req.body?.SpeechResult);
 
