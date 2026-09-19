@@ -1069,3 +1069,21 @@ button, input, select, textarea { font: inherit; }
     animation: none !important;
   }
 }
+
+
+.scope-note {
+  max-width: 820px;
+  margin: 24px auto 0;
+  padding: 15px 17px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.022);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.scope-note strong {
+  color: var(--soft);
+}
