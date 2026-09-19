@@ -27,9 +27,11 @@ The public Voice routes validate Twilio's `X-Twilio-Signature` when `PUBLIC_BASE
 
 `PUBLIC_BASE_URL` must match the public URL Twilio uses to call the application. If a tunnel or reverse proxy changes that URL, update the environment value.
 
-## Local AI data
+## Voice and speech data
 
-The Ollama model receives recognized caller speech so it can generate a reply. Twilio credentials are not sent to the model.
+Call audio is handled through Twilio Voice. When `<Gather input="speech">` is used, Twilio's speech-recognition path processes the caller's speech and sends the resulting `SpeechResult` transcript to this application.
+
+The application sends only the recognized speech text needed for the reply to the local Ollama model. It does not send the Twilio Auth Token or other Twilio credentials to Ollama.
 
 The assistant is instructed not to request passwords, payment-card details, one-time passcodes, or authentication secrets.
 
