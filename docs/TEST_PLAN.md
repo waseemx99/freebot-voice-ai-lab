@@ -2,7 +2,7 @@
 
 ## Local smoke test
 
-1. Install Node.js 18+.
+1. Install Node.js 20+.
 2. Copy `.env.example` to `.env`.
 3. Run `npm install`.
 4. Start the app with `npm start`.
