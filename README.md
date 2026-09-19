@@ -1,77 +1,142 @@
-# Freebot Twilio Voice Demo
+# Freebot Voice AI Lab
 
-A review-friendly **Twilio Programmable Voice + local AI** demonstration maintained by **Waseem Hassan (@waseemx99)**.
+A small **Twilio Programmable Voice + local Ollama** prototype for experimenting with AI-assisted phone interactions.
 
-This repository documents a legitimate development/testing use case: inbound test calls from verified or explicitly consenting participants are routed to a Node.js webhook, speech is collected using TwiML, and an optional local Ollama model returns a short response.
+I built this while exploring how a voice channel could connect to a Freebot-style assistant. It is currently a standalone prototype rather than a full integration with the upstream Freebot application.
 
-> Independent integration demo. Not an official Twilio or FreebotAI product.
+## What it does
 
-## Scope
+- accepts an inbound Twilio Voice webhook;
+- uses TwiML speech gathering to capture a caller's request;
+- sends the recognized text to a local Ollama model when enabled;
+- speaks the model's reply back to the caller;
+- falls back gracefully when the local model is unavailable;
+- exposes a simple status page for local development.
 
-- Development and learning only.
-- Inbound test calls only.
-- Verified or explicitly consenting testers only.
-- No mass dialing, telemarketing, advertising, lead generation, or robocalling.
-- No collection of passwords, OTPs, payment-card data, or authentication secrets.
-- Secrets remain in `.env` and are excluded from Git.
-
-## Architecture
+## Flow
 
 ```text
-Verified / consenting tester
-            |
-            v
-   Twilio Programmable Voice
-            |
-            v
-   HTTPS Node.js webhook
-            |
-            v
-   Local Ollama AI (optional)
-            |
-            v
-      TwiML voice reply
+Caller
+  |
+  v
+Twilio Programmable Voice
+  |
+  v
+Node.js / Express webhook
+  |
+  +--> Ollama (optional)
+  |
+  v
+TwiML voice response
 ```
 
-## Run locally
+## Requirements
+
+- Node.js 18+
+- a Twilio account and Voice-capable number for live call testing
+- an HTTPS-accessible webhook URL
+- Ollama if you want local AI responses
+
+Ollama is optional. The voice webhook still works without it.
+
+## Setup
+
+Clone the repository and install dependencies:
+
+```bash
+npm install
+```
+
+Create your local environment file:
 
 ```bash
 cp .env.example .env
-npm install
+```
+
+On Windows PowerShell you can use:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Start the app:
+
+```bash
 npm start
 ```
 
-Open `http://127.0.0.1:3000`.
+Then open:
 
-Run tests:
-
-```bash
-npm test
+```text
+http://127.0.0.1:3000
 ```
+
+## Environment variables
+
+The main settings are:
+
+```env
+PORT=3000
+PUBLIC_BASE_URL=https://your-public-url.example
+
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=replace_me
+TWILIO_PHONE_NUMBER=+1XXXXXXXXXX
+
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=qwen3.5:9b-64k
+ENABLE_OLLAMA=true
+```
+
+Never commit your real `.env` file.
 
 ## Twilio webhook
 
-After account approval and creation of a public HTTPS endpoint:
+Expose the app through HTTPS, then configure the incoming Voice webhook for your Twilio number as:
 
 ```text
 https://YOUR-PUBLIC-URL/voice/incoming
 ```
 
-## Documentation
+The webhook accepts either GET or POST. Speech results are sent to:
 
-- `docs/USE_CASE.md`
-- `docs/CONSENT_AND_CALL_POLICY.md`
-- `docs/SECURITY.md`
-- `docs/TEST_PLAN.md`
-- `docs/TWILIO_REVIEW_ANSWERS.md`
+```text
+/voice/respond
+```
 
-## Policy references
+## Local AI
 
-Prepared against Twilio documentation checked on 2026-09-19:
+By default the app expects Ollama at:
 
-- https://www.twilio.com/docs/usage/trials
-- https://www.twilio.com/docs/usage/trials/try-out-voice
-- https://www.twilio.com/en-us/legal/aup
-- https://www.twilio.com/en-us/legal/service-country-specific-terms/voice-sip
+```text
+http://127.0.0.1:11434
+```
 
-Twilio requirements can change; re-check before production use.
+Change `OLLAMA_MODEL` in `.env` if you want to use another installed model.
+
+## Tests
+
+With the app already running:
+
+```bash
+npm test
+```
+
+The smoke test checks the health endpoint, status endpoint, incoming-call TwiML, and speech-response route.
+
+## Project status
+
+This is an early prototype. The next steps are better conversation state, configurable prompts, cleaner call logs, and tighter integration with the upstream Freebot project.
+
+## Notes
+
+- `docs/USE_CASE.md` — project behavior and boundaries
+- `docs/SECURITY.md` — credential and data-handling notes
+- `docs/TEST_PLAN.md` — local and live-call testing
+- `docs/RESPONSIBLE_USE.md` — basic usage expectations
+
+## Upstream project
+
+FreebotAI/Freebot: https://github.com/FreebotAI/Freebot
+
+This repository is an independent experiment and is not an official Twilio or FreebotAI project.
