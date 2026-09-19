@@ -6,7 +6,8 @@ const outDir = path.resolve('demo-generated');
 await fs.mkdir(outDir, { recursive: true });
 
 const browser = await chromium.launch({ headless: true });
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, bypassCSP: true });
+const page = await context.newPage();
 
 await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle' });
 await page.waitForFunction(() => document.getElementById('runtime-badge')?.textContent !== 'Checking');
@@ -35,7 +36,8 @@ async function renderOutput(title, command, fileName, outputPath) {
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
 
-  await page.setContent(`<!doctype html>
+  const outputPage = await context.newPage();
+  await outputPage.setContent(`<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -67,7 +69,8 @@ async function renderOutput(title, command, fileName, outputPath) {
 </body>
 </html>`, { waitUntil: 'load' });
 
-  await page.screenshot({ path: path.join(outDir, outputPath), fullPage: true, animations: 'disabled' });
+  await outputPage.screenshot({ path: path.join(outDir, outputPath), fullPage: true, animations: 'disabled' });
+  await outputPage.close();
 }
 
 await renderOutput('Application startup', 'npm start', 'server.log', '03-server-startup.png');
