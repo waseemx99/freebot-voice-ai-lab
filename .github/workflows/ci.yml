@@ -26,11 +26,33 @@ jobs:
         run: |
           node --check src/server.js
           node --check scripts/smoke-test.mjs
+          node --check scripts/security-test.mjs
 
-      - name: Run smoke test
+      - name: Start test server
+        env:
+          TWILIO_AUTH_TOKEN: ci-test-token
+          PUBLIC_BASE_URL: http://127.0.0.1:3000
+          ENABLE_OLLAMA: "false"
         run: |
           npm start > server.log 2>&1 &
-          SERVER_PID=$!
-          trap "kill $SERVER_PID" EXIT
+          echo $! > server.pid
           sleep 2
-          npm test
+
+      - name: Run smoke test
+        run: npm test
+
+      - name: Run signed webhook security test
+        env:
+          TWILIO_AUTH_TOKEN: ci-test-token
+        run: npm run test:security
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat server.log || true
+
+      - name: Stop test server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+          fi
