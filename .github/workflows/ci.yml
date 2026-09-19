@@ -39,12 +39,27 @@ jobs:
           sleep 2
 
       - name: Run smoke test
-        run: npm test
+        run: |
+          mkdir -p demo-generated
+          npm test 2>&1 | tee demo-generated/smoke-test.txt
 
       - name: Run signed webhook security test
         env:
           TWILIO_AUTH_TOKEN: ci-test-token
-        run: npm run test:security
+        run: npm run test:security 2>&1 | tee demo-generated/security-test.txt
+
+      - name: Install Chromium for evidence capture
+        run: npx playwright install chromium
+
+      - name: Capture real demo evidence
+        run: node scripts/capture-demo-evidence.mjs
+
+      - name: Upload demo evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: freebot-demo-evidence
+          path: demo-generated/
+          if-no-files-found: error
 
       - name: Show server log on failure
         if: failure()
