@@ -113,10 +113,8 @@ app.get('/api/status', (_req, res) => {
       enabled: String(process.env.ENABLE_OLLAMA || 'true').toLowerCase() === 'true'
     },
     configuration: {
-      accountSid: configured('TWILIO_ACCOUNT_SID'),
-      authToken: configured('TWILIO_AUTH_TOKEN'),
-      phoneNumber: configured('TWILIO_PHONE_NUMBER'),
-      publicUrl: configured('PUBLIC_BASE_URL')
+      webhookSecurityReady:
+        configured('TWILIO_AUTH_TOKEN') && configured('PUBLIC_BASE_URL')
     }
   });
 });
