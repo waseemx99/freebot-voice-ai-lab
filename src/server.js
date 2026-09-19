@@ -31,23 +31,9 @@ function configured(name) {
   return Boolean(value && value.trim() && !/replace_me|xxxxxxxx|YOUR-PUBLIC/i.test(value));
 }
 
-function isLocalRequest(req) {
-  const address = String(req.socket?.remoteAddress || '').toLowerCase();
-  return (
-    address === '127.0.0.1' ||
-    address === '::1' ||
-    address === '::ffff:127.0.0.1'
-  );
-}
-
 function validateTwilioWebhook(req, res, next) {
   const tokenReady = configured('TWILIO_AUTH_TOKEN');
   const publicUrlReady = configured('PUBLIC_BASE_URL');
-
-  // Keep local smoke testing simple before Twilio credentials are configured.
-  if (isLocalRequest(req) && !publicUrlReady) {
-    return next();
-  }
 
   if (!tokenReady || !publicUrlReady) {
     return res.status(503).send('Twilio webhook security is not configured.');
