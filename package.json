@@ -1,5 +1,5 @@
 {
-  "name": "freebot-twilio-voice-demo",
+  "name": "freebot-voice-ai-lab",
   "version": "1.0.0",
   "private": true,
   "description": "Twilio Voice and local Ollama prototype for AI-assisted phone interactions.",
@@ -19,5 +19,13 @@
     "twilio": "^6.1.1"
   },
   "author": "Waseem Hassan",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waseemx99/freebot-voice-ai-lab.git"
+  },
+  "homepage": "https://github.com/waseemx99/freebot-voice-ai-lab",
+  "bugs": {
+    "url": "https://github.com/waseemx99/freebot-voice-ai-lab/issues"
+  }
 }
