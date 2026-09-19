@@ -17,8 +17,7 @@ await check('/health');
 const statusText = await check('/api/status');
 const status = JSON.parse(statusText);
 const signatureValidationActive =
-  Boolean(status?.configuration?.authToken) &&
-  Boolean(status?.configuration?.publicUrl);
+  Boolean(status?.configuration?.webhookSecurityReady);
 
 if (signatureValidationActive) {
   console.log(
