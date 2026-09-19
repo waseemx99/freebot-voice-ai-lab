@@ -9,25 +9,29 @@
 5. Open `http://127.0.0.1:3000`.
 6. In another terminal, run `npm test`.
 
-The smoke test checks:
+Before a real public Twilio URL and Auth Token are configured, the smoke test checks:
 
 - `/health`
 - `/api/status`
 - incoming-call TwiML from `/voice/incoming`
 - speech-response TwiML from `/voice/respond`
 
+Once public signature validation is configured, the test still checks the local health/status endpoints but skips unsigned Voice webhook requests. That avoids treating the security layer as a test failure.
+
 ## Ollama test
 
 Make sure Ollama is running and that the model configured in `OLLAMA_MODEL` is installed.
 
-Then call `/voice/respond` with a sample `SpeechResult` and verify that the generated TwiML contains a model response.
+Then test the speech-response path before enabling the public Twilio configuration and confirm that the generated TwiML contains a model response.
 
 ## Live Twilio test
 
-1. Expose the local app through an HTTPS endpoint.
-2. Set `PUBLIC_BASE_URL` in `.env`.
-3. Configure the Twilio number's incoming Voice webhook to `/voice/incoming`.
-4. Place a test call from a number you control.
-5. Confirm that speech is recognized and the response is spoken back correctly.
+1. Expose the app through an HTTPS endpoint.
+2. Set `PUBLIC_BASE_URL` to that exact public origin.
+3. Set the real `TWILIO_AUTH_TOKEN` locally in `.env`.
+4. Configure the Twilio number's incoming Voice webhook to `/voice/incoming`.
+5. Place a test call from a number permitted by your Twilio account.
+6. Confirm that speech is recognized and the response is spoken back correctly.
+7. Confirm that an unsigned request to the public Voice webhook is rejected.
 
-Use real call testing only with people who have agreed to participate.
+Twilio trial accounts currently restrict Voice testing to verified numbers and to the account's sign-up country, so follow the current Console restrictions when testing.
