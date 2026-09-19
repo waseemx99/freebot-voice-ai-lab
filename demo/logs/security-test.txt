@@ -1,0 +1,7 @@
+
+> freebot-voice-ai-lab@1.0.0 test:security
+> node scripts/security-test.mjs
+
+PASS valid Twilio signature -> accepted
+PASS invalid Twilio signature -> rejected
+PASS signed speech response -> accepted

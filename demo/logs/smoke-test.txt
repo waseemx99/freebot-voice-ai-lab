@@ -1,0 +1,11 @@
+
+> freebot-voice-ai-lab@1.0.0 test
+> node scripts/smoke-test.mjs
+
+PASS /health -> 200
+PASS /api/status -> 200
+PASS / -> 200
+PASS /styles.css -> 200
+PASS /app.js -> 200
+All application smoke tests passed.
+Run npm run test:security for signed Twilio webhook verification.
