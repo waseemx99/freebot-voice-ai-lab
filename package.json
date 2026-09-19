@@ -11,12 +11,12 @@
     "test:security": "node scripts/security-test.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
-    "twilio": "^5.5.2"
+    "twilio": "^6.1.1"
   },
   "author": "Waseem Hassan",
   "license": "MIT"
