@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [main]
@@ -60,6 +63,31 @@ jobs:
           name: freebot-demo-evidence
           path: demo-generated/
           if-no-files-found: error
+
+      - name: Publish clean evidence branch
+        run: |
+          rm -rf /tmp/freebot-evidence
+          mkdir -p /tmp/freebot-evidence/screenshots /tmp/freebot-evidence/logs
+          cp demo-generated/01-homepage.png /tmp/freebot-evidence/screenshots/
+          cp demo-generated/02-local-status.png /tmp/freebot-evidence/screenshots/
+          cp demo-generated/03-server-startup.png /tmp/freebot-evidence/screenshots/
+          cp demo-generated/04-smoke-tests.png /tmp/freebot-evidence/screenshots/
+          cp demo-generated/05-security-tests.png /tmp/freebot-evidence/screenshots/
+          cp demo-generated/smoke-test.txt /tmp/freebot-evidence/logs/
+          cp demo-generated/security-test.txt /tmp/freebot-evidence/logs/
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B evidence/generated-demo origin/main
+
+          mkdir -p demo/screenshots demo/logs
+          cp /tmp/freebot-evidence/screenshots/* demo/screenshots/
+          cp /tmp/freebot-evidence/logs/* demo/logs/
+
+          git add demo/screenshots demo/logs
+          git commit -m "Add verified automated demo evidence"
+          git push --force origin evidence/generated-demo
 
       - name: Show server log on failure
         if: failure()
