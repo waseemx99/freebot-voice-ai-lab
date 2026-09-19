@@ -1,17 +1,23 @@
 # Security
 
-## Secrets
+## Environment secrets
 
-Real Twilio credentials belong only in a local `.env` file. The repository includes only placeholders in `.env.example`, and `.env` is ignored by Git.
+Twilio credentials are loaded from a local `.env` file. The repository contains only placeholders in `.env.example`, and `.env` is excluded through `.gitignore`.
 
-## Data minimization
+If a credential is accidentally committed or exposed, rotate it immediately.
 
-The demo does not intentionally store call recordings, passwords, OTPs, payment-card data, or authentication secrets.
+## Webhook deployment
 
-## AI boundary
+Use HTTPS for any webhook exposed to the internet.
 
-Twilio credentials are never sent to the local Ollama model. The AI receives only the caller's recognized speech text required to generate a reply.
+For a production deployment, Twilio request-signature validation should also be added before accepting webhook traffic.
 
-## Deployment
+## AI data path
 
-Use HTTPS for any public webhook. Rotate credentials immediately if a secret is ever exposed.
+The local model receives the caller's recognized speech text so it can generate a reply. Twilio credentials are not passed to Ollama.
+
+The system prompt also tells the demo assistant not to ask callers for passwords, payment-card details, one-time passcodes, or authentication secrets.
+
+## Storage
+
+The current prototype does not include a database or call-recording feature, so it does not intentionally persist conversation audio or transcripts.
