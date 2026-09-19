@@ -102,7 +102,7 @@ OLLAMA_MODEL=qwen3.5:9b-64k
 ENABLE_OLLAMA=true
 ```
 
-Never commit your real `.env` file. Public Voice webhooks also validate Twilio request signatures when the real `PUBLIC_BASE_URL` and `TWILIO_AUTH_TOKEN` are configured.
+Never commit your real `.env` file. Voice webhooks require `PUBLIC_BASE_URL` and `TWILIO_AUTH_TOKEN` and validate Twilio request signatures; there is no unsigned webhook bypass.
 
 ## Twilio webhook
 
@@ -136,7 +136,7 @@ With the app already running:
 npm test
 ```
 
-The smoke test checks the health endpoint, status endpoint, incoming-call TwiML, and speech-response route.
+The smoke test checks the app and website endpoints. Run `npm run test:security` for signed Twilio webhook and TwiML verification.
 
 ## Project status
 
