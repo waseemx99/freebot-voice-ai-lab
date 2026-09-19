@@ -88,7 +88,7 @@ OLLAMA_MODEL=qwen3.5:9b-64k
 ENABLE_OLLAMA=true
 ```
 
-Never commit your real `.env` file.
+Never commit your real `.env` file. Public Voice webhooks also validate Twilio request signatures when the real `PUBLIC_BASE_URL` and `TWILIO_AUTH_TOKEN` are configured.
 
 ## Twilio webhook
 
