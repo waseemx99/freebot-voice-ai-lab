@@ -18,3 +18,11 @@ Do not commit:
 - large raw production logs.
 
 Screenshots are usually enough for visual evidence. Logs should be added only when they improve technical clarity.
+
+
+## Current logs
+
+- `smoke-test.txt` - real passing application smoke-test output from GitHub Actions.
+- `security-test.txt` - real passing signed-webhook verification output from GitHub Actions.
+
+See `../AUTOMATED_EVIDENCE.md` for the workflow provenance.
