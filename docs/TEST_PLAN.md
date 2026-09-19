@@ -16,7 +16,7 @@ Before a real public Twilio URL and Auth Token are configured, the smoke test ch
 - incoming-call TwiML from `/voice/incoming`
 - speech-response TwiML from `/voice/respond`
 
-Once public signature validation is configured, the test still checks the local health/status endpoints but skips unsigned Voice webhook requests. That avoids treating the security layer as a test failure.
+Once public signature validation is configured, the smoke test still checks the local health/status endpoints but skips unsigned Voice webhook requests. The separate `npm run test:security` test generates Twilio-style signatures and verifies that valid signed requests are accepted while an invalid signature is rejected with HTTP 403.
 
 ## Ollama test
 
